@@ -37,12 +37,12 @@ jobs:
       - name: Install explicit version
         uses: ./
         with:
-          version: '1.7.11'
+          version: '1.7.12'
       - name: Verify explicit version
         shell: bash
         run: |
           version=$(actionlint --version)
-          [[ "${version%%$'\n'*}" == '1.7.11' ]]
+          [[ "${version%%$'\n'*}" == '1.7.12' ]]
       - name: Lint workflows
         shell: bash
         run: actionlint -shellcheck= -pyflakes=

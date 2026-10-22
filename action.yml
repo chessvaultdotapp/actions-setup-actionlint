@@ -4,7 +4,7 @@ description: Install official actionlint prebuilt binaries on Linux, Windows, an
 inputs:
   version:
     description: Exact actionlint release version, without the v prefix
-    default: '1.7.11'
+    default: '1.7.12'
 
 runs:
   using: composite

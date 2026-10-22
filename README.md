@@ -15,7 +15,7 @@ steps:
       persist-credentials: false
   - uses: chessvaultdotapp/actions-setup-actionlint@FULL_COMMIT_SHA
     with:
-      version: '1.7.11'
+      version: '1.7.12'
   - run: actionlint -shellcheck= -pyflakes=
 ```
 
@@ -23,7 +23,7 @@ steps:
 
 | Input | Description | Default |
 | --- | --- | --- |
-| `version` | Exact stable release version, without the `v` prefix | `1.7.11` |
+| `version` | Exact stable release version, without the `v` prefix | `1.7.12` |
 
 `latest`, version ranges, and prerelease versions are not supported.
 
