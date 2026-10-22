@@ -1,0 +1,59 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: Install (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04
+          - ubuntu-24.04-arm
+          - ubuntu-26.04
+          - ubuntu-26.04-arm
+          - ubuntu-slim
+          - macos-15-intel
+          - macos-26
+          - windows-2025
+          - windows-11-arm
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install default version
+        uses: ./
+      - name: Verify executable is on PATH
+        shell: bash
+        run: actionlint --version
+      - name: Install explicit version
+        uses: ./
+        with:
+          version: '1.7.11'
+      - name: Verify explicit version
+        shell: bash
+        run: |
+          version=$(actionlint --version)
+          [[ "${version%%$'\n'*}" == '1.7.11' ]]
+      - name: Lint workflows
+        shell: bash
+        run: actionlint -shellcheck= -pyflakes=
+
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check installer
+        run: |
+          bash -n install.sh
+          shellcheck install.sh

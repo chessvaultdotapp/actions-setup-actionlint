@@ -1,0 +1,17 @@
+name: Setup actionlint
+description: Install official actionlint prebuilt binaries on Linux, Windows, and macOS
+
+inputs:
+  version:
+    description: Exact actionlint release version, without the v prefix
+    default: '1.7.11'
+
+runs:
+  using: composite
+  steps:
+    - name: Download and install actionlint
+      shell: bash
+      env:
+        ACTIONLINT_VERSION: ${{ inputs.version }}
+        SETUP_ACTIONLINT_ACTION_PATH: ${{ github.action_path }}
+      run: bash "$SETUP_ACTIONLINT_ACTION_PATH/install.sh"
